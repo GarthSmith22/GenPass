@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "test": "node --test 'scripts/*.test.js'",
+    "typecheck": "node --check scripts/genpass.js && node --check scripts/password-generator.js && node --check scripts/password-validator.js && node --check scripts/word-transformer.js && node --check scripts/random-word-generator-com-provider.js && node --check scripts/random-words.js"
+  },
   "devDependencies": {
     "@ai-hero/sandcastle": "^0.5.11"
   },
