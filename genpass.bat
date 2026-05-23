@@ -1,1 +1,1 @@
-node ./scripts/random-words.js
+node ./scripts/genpass.js

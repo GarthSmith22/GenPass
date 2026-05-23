@@ -1,11 +1,14 @@
 // Usage: node scripts/random-words.js
-// Returns 3 random English words from randomwordgenerator.com
+// Prints 3 random English words from the default Random Word Provider, one per line.
+
+const provider = require("./random-word-generator-com-provider");
 
 (async () => {
-  const res = await fetch("https://randomwordgenerator.com/json/words_ws.json");
-  const { data } = await res.json();
-  const pick = () => data[Math.floor(Math.random() * data.length)].word.value;
-  console.log(pick());
-  console.log(pick());
-  console.log(pick());
+  try {
+    const words = await provider.getWords();
+    for (const word of words) console.log(word);
+  } catch (error) {
+    console.error(error.message ?? String(error));
+    process.exit(1);
+  }
 })();
