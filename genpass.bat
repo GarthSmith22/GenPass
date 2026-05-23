@@ -1,1 +1,1 @@
-node ./scripts/genpass.js
+node C:/repos/GenPass/scripts/genpass.js
