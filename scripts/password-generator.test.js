@@ -22,8 +22,9 @@ function stubProvider(responses) {
 
 test("returns the password candidate when the first attempt is valid", async () => {
   const provider = stubProvider([["elephant", "mountain", "river"]]);
-  const password = await generate(provider);
-  assert.equal(password, "El4ph@ntM0_nt@1nR1v4r");
+  const result = await generate(provider);
+  assert.equal(result.password, "El4ph@ntM0_nt@1nR1v4r");
+  assert.deepEqual(result.words, ["elephant", "mountain", "river"]);
   assert.equal(provider.callCount(), 1);
 });
 
@@ -32,8 +33,9 @@ test("retries when combined raw word length is under 15", async () => {
     ["name", "model", "key"], // 12 raw chars — too short
     ["elephant", "mountain", "river"],
   ]);
-  const password = await generate(provider);
-  assert.equal(password, "El4ph@ntM0_nt@1nR1v4r");
+  const result = await generate(provider);
+  assert.equal(result.password, "El4ph@ntM0_nt@1nR1v4r");
+  assert.deepEqual(result.words, ["elephant", "mountain", "river"]);
   assert.equal(provider.callCount(), 2);
 });
 
@@ -42,8 +44,9 @@ test("retries when candidate has no special character", async () => {
     ["rhythm", "crypt", "lymph"], // 16 raw chars, no @/_/$
     ["elephant", "mountain", "river"],
   ]);
-  const password = await generate(provider);
-  assert.equal(password, "El4ph@ntM0_nt@1nR1v4r");
+  const result = await generate(provider);
+  assert.equal(result.password, "El4ph@ntM0_nt@1nR1v4r");
+  assert.deepEqual(result.words, ["elephant", "mountain", "river"]);
   assert.equal(provider.callCount(), 2);
 });
 
@@ -71,7 +74,8 @@ test("retries multiple times until a valid password is produced", async () => {
     ["name", "model", "key"],
     ["elephant", "mountain", "river"],
   ]);
-  const password = await generate(provider);
-  assert.equal(password, "El4ph@ntM0_nt@1nR1v4r");
+  const result = await generate(provider);
+  assert.equal(result.password, "El4ph@ntM0_nt@1nR1v4r");
+  assert.deepEqual(result.words, ["elephant", "mountain", "river"]);
   assert.equal(provider.callCount(), 4);
 });
